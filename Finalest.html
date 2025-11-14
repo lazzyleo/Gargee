@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>I'm Sorry Gargee</title>
+
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive;
+      background: #ffe6f2;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    /* Sparkles */
+    .sparkle {
+      position: fixed;
+      width: 8px;
+      height: 8px;
+      background: white;
+      border-radius: 50%;
+      animation: sparkle 2s linear infinite;
+      opacity: 0.8;
+      pointer-events: none;
+    }
+
+    @keyframes sparkle {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-200px) scale(0.3); opacity: 0; }
+    }
+
+    /* Floating Roses */
+    .rose {
+      position: fixed;
+      left: 0;
+      z-index: 1000;
+      font-size: 40px;
+      opacity: 0.9;
+      pointer-events: none;
+      animation: floatFlower 7s linear forwards;
+    }
+
+    @keyframes floatFlower {
+      0% { top: -60px; opacity: 1; }
+      80% { opacity: 0.8; }
+      100% { top: 100vh; opacity: 0; }
+    }
+
+    /* Main card */
+    .card {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #fff0f7;
+      padding: 30px;
+      max-width: 420px;
+      border-radius: 25px;
+      border: 3px solid #ff99c8;
+      box-shadow: 0 4px 25px rgba(255, 105, 180, 0.3);
+      text-align: center;
+      z-index: 10;
+    }
+
+    button {
+      padding: 12px 22px;
+      border: none;
+      border-radius: 15px;
+      background: #ff66b3;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      margin: 10px;
+      box-shadow: 0 3px 10px rgba(255, 105, 180, 0.4);
+    }
+
+    button:hover {
+      background: #ff4da6;
+    }
+
+    /* Growing heart */
+    #heart {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      font-size: 80px;
+      opacity: 0;
+      transition: 2s ease;
+      z-index: 20;
+    }
+
+    /* Slideshow */
+    #slideshow {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: black;
+      justify-content: center;
+      align-items: center;
+      z-index: 15;
+    }
+
+    #slideshow img {
+      max-width: 90%;
+      max-height: 90%;
+      position: absolute;
+      opacity: 0;
+      transition: opacity 1s;
+      box-shadow: 0 0 30px 5px #d63384;
+      border-radius: 20px;
+    }
+
+    /* Final Screen */
+    #final {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, #ffb3d9, #ffe6f9);
+      animation: flowers 6s infinite alternate;
+      text-align: center;
+      padding-top: 9%;
+      font-size: 26px;
+      color: #d63384;
+      z-index: 20;
+    }
+
+    @keyframes flowers {
+      0% { filter: hue-rotate(0deg); }
+      100% { filter: hue-rotate(40deg); }
+    }
+
+    /* 🌸 Bigger Bouquet at Bottom */
+    .bouquet {
+      position: absolute;
+      left: 50%;
+      bottom: 10px;
+      transform: translateX(-50%) scale(1.4);
+      width: 320px;           /* increased size */
+      max-width: 90vw;
+      opacity: 0;
+      animation: bouquetFadein 2.3s linear forwards 0.8s;
+      z-index: 25;
+    }
+
+    @keyframes bouquetFadein {
+      from { opacity: 0; transform: translateX(-50%) translateY(40px) scale(1.1); }
+      to   { opacity: 1; transform: translateX(-50%) translateY(0px) scale(1.4); }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Main apology card -->
+  <div class="card" id="mainCard">
+    <h2>I'm Really Sorry, Gargee ❤️</h2>
+    <p>Will you forgive me?</p>
+    <button onclick="startSequence()">Yes</button>
+    <button onclick="startSequence()">Of course yes</button>
+  </div>
+
+  <!-- Heart animation -->
+  <div id="heart">❤️</div>
+
+  <!-- Slideshow -->
+  <div id="slideshow"></div>
+
+  <!-- Final message -->
+  <div id="final">
+    <h2>I'm Sorry For Everything, Gargee ❤️</h2>
+    <p>You mean the world to me. Thank you for being patient, kind and always staying.  
+    I love you endlessly. 🌸</p>
+
+    <!-- Bigger bouquet -->
+    <img src="bouquet.png" alt="Roses Bouquet" class="bouquet">
+  </div>
+
+  <!-- Background music -->
+  <audio id="bg-music" src="apologysong.mp3" preload="auto"></audio>
+
+  <script>
+    /* Create sparkles */
+    function createSparkles() {
+      setInterval(() => {
+        let s = document.createElement('div');
+        s.className = 'sparkle';
+        s.style.left = Math.random()*100 + 'vw';
+        s.style.top = '100vh';
+        s.style.animationDuration = (2 + Math.random()*2)+'s';
+        document.body.appendChild(s);
+        setTimeout(()=>s.remove(), 4000);
+      }, 200);
+    }
+    createSparkles();
+
+    /* Create floating roses */
+    function createFlowers() {
+      setInterval(() => {
+        let flower = document.createElement('div');
+        flower.className = 'rose';
+        flower.innerHTML = '🌹';
+        flower.style.left = Math.random() * 98 + 'vw';
+        flower.style.top = '-60px';
+        flower.style.fontSize = (32 + Math.random()*45) + 'px';
+        flower.style.opacity = 0.6 + Math.random()*0.35;
+        document.body.appendChild(flower);
+        setTimeout(() => flower.remove(), 7000);
+      }, 450);
+    }
+    createFlowers();
+
+    /* Start sequence */
+    function startSequence() {
+      var audio = document.getElementById('bg-music');
+      audio.currentTime = 0;
+      audio.play();
+
+      document.getElementById('mainCard').style.display = 'none';
+
+      let heart = document.getElementById('heart');
+      heart.style.opacity = 1;
+      heart.style.transform = 'translate(-50%, -50%) scale(3)';
+
+      setTimeout(() => {
+        heart.style.display = 'none';
+        startSlideshow();
+      }, 2500);
+    }
+
+    /* Slideshow images */
+    let images = [
+      '1000132541.jpg',
+      '1000132539.jpg',
+      '1000132538.jpg',
+      '1000132537.jpg'
+    ];
+
+    function startSlideshow() {
+      let show = document.getElementById('slideshow');
+      show.innerHTML = '';
+      show.style.display = 'flex';
+
+      images.forEach((src, i) => {
+        let img = document.createElement('img');
+        img.src = src;
+        img.style.zIndex = i;
+        show.appendChild(img);
+      });
+
+      let current = 0;
+      let imgs = show.querySelectorAll('img');
+
+      function showCurrent(idx) {
+        imgs.forEach((img, i) => {
+          img.style.opacity = (i === idx) ? 1 : 0;
+        });
+      }
+
+      showCurrent(0);
+
+      let slideshowInterval = setInterval(() => {
+        imgs[current].style.opacity = 0;
+        current++;
+
+        if (current >= imgs.length) {
+          clearInterval(slideshowInterval);
+          show.style.display = 'none';
+          showFinalMessage();
+          return;
+        }
+
+        imgs[current].style.opacity = 1;
+        showCurrent(current);
+      }, 1800);
+    }
+
+    /* Final screen */
+    function showFinalMessage() {
+      document.getElementById('final').style.display = 'block';
+    }
+  </script>
+
+</body>
+</html>
