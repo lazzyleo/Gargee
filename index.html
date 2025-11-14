@@ -31,17 +31,18 @@
     }
 
     /* Floating Roses */
+  
     .rose {
       position: fixed;
       left: 0;
-      z-index: 1000;
+      z-index: 600;
       font-size: 40px;
-      opacity: 0.9;
+      opacity: 0.5;
       pointer-events: none;
-      animation: floatFlower 7s linear forwards;
+      animation: bouquetFadeinFlower 8s linear forwards;
     }
 
-    @keyframes floatFlower {
+    @keyframes bouquetFadeinFlower {
       0% { top: -60px; opacity: 1; }
       80% { opacity: 0.8; }
       100% { top: 100vh; opacity: 0; }
@@ -212,7 +213,7 @@
         flower.style.fontSize = (32 + Math.random()*45) + 'px';
         flower.style.opacity = 0.6 + Math.random()*0.35;
         document.body.appendChild(flower);
-        setTimeout(() => flower.remove(), 7000);
+        setTimeout(() => flower.remove(), 2000);
       }, 450);
     }
     createFlowers();
@@ -220,7 +221,7 @@
     /* Start sequence */
     function startSequence() {
       var audio = document.getElementById('bg-music');
-      audio.currentTime = 0;
+      audio.currentTime = 38;
       audio.play();
 
       document.getElementById('mainCard').style.display = 'none';
